@@ -19,25 +19,25 @@ ADD /requirements/ /tmp/requirements
 RUN /opt/ds/bin/pip install -r /tmp/requirements/pre-requirements.txt
 RUN /opt/ds/bin/pip install -r /tmp/requirements/requirements.txt
 
-RUN useradd --create-home --home-dir /home/ds --shell /bin/bash ds
-RUN chown -R ds /opt/ds
-RUN adduser ds sudo
+RUN useradd --create-home --home-dir /home/datafirst --shell /bin/bash datafirst
+RUN chown -R datafirst /opt/ds
+RUN adduser datafirst sudo
 
-ADD run_ipython.sh /home/ds
-RUN chmod +x /home/ds/run_ipython.sh
-RUN chown ds /home/ds/run_ipython.sh
+ADD run_ipython.sh /home/datafirst
+RUN chmod +x /home/datafirst/run_ipython.sh
+RUN chown datafirst /home/datafirst/run_ipython.sh
 
-ADD .bashrc.template /home/ds/.bashrc
+ADD .bashrc.template /home/datafirst/.bashrc
 
 EXPOSE 8888
-RUN usermod -a -G sudo ds
-RUN echo "ds ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
-USER ds
-RUN mkdir -p /home/ds/notebooks
-ENV HOME=/home/ds
+RUN usermod -a -G sudo datafirst
+RUN echo "datafirst ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+USER datafirst
+RUN mkdir -p /home/datafirst/notebooks
+ENV HOME=/home/datafirst
 ENV SHELL=/bin/bash
 ENV USER=ds
-VOLUME /home/ds/notebooks
-WORKDIR /home/ds/notebooks
+VOLUME /home/datafirst/notebooks
+WORKDIR /home/datafirst/notebooks
 
-CMD ["/home/ds/run_ipython.sh"]
+CMD ["/home/datafirst/run_ipython.sh"]
